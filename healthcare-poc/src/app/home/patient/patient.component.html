@@ -1,0 +1,124 @@
+<div>
+  <!-- <div class="flex">
+    <span class="p-input-icon-left ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text"  placeholder="Search keyword" />
+    </span>
+</div> -->
+
+  <div class="row button-row">
+    <div class="patient-btns">
+      <div>
+        <button pButton type="button" (click)="addPatient('Add-Patient')">
+          <i class="pi pi-plus"></i>New Patient
+        </button>
+      </div>
+      <div>
+        <button pButton type="button" (click)="addPatient('Add-Patient')">
+          <i class="pi pi-file-excel"></i>Export To Excel
+        </button>
+      </div>
+      <div>
+        <button pButton type="button" (click)="addPatient('Add-Patient')">
+          <i class="pi pi-file-pdf"></i>Export To pdf
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row col-md-12">
+    <form class="search-area" [formGroup]="filterForm">
+      <div class="input-search">
+        <span
+          class="pi pi-search search-icon"
+          (click)="onFilter($event)"
+        ></span>
+        <input
+          type="text"
+          class="form-control search-text search-text-30"
+          placeholder="Search Keyword..."
+          formControlName="searchKeyword"
+          (input)="onFilter($event)"
+        />
+        <button class="pi pi-times close-icon" (click)="resetFilter()"></button>
+      </div>
+
+      <div class="clear"></div>
+    </form>
+  </div>
+  <kendo-grid
+    #grid
+    [pageSize]="pageSize"
+    [pageable]="true"
+    (pageChange)="pageChange($event)"
+  >
+    <kendo-grid-column field="patientCode" title="Patient Code" [width]="100">
+    </kendo-grid-column>
+    <kendo-grid-column field="firstName" title="Patient Name" [width]="150">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="customer-photo"><img [src]="photoURL(dataItem)" /></div>
+        <div class="customer-name">{{ dataItem.firstName }}</div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="emailId" title="Email Id" [width]="150">
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="contactNumber"
+      title="Contact Number"
+      [width]="100"
+      [class]="{ 'text-center': true }"
+      [resizable]="false"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="gender"
+      title="Gender"
+      [width]="100"
+      [class]="{ 'text-center': true }"
+      [resizable]="false"
+      filter="boolean"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="customer-name">
+          {{ gender[dataItem.gender].toString() }}
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="age"
+      title="Age"
+      [width]="100"
+      [resizable]="false"
+      filter="numeric"
+    >
+    </kendo-grid-column>
+    <kendo-grid-column
+      field=""
+      title="Oxygen Chart"
+      [width]="200"
+      [sortable]="false"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <p-chart type="line" [data]="dataItem.chart"></p-chart>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="" title="Action" [width]="100" [sortable]="false">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="action-icons">
+          <i
+            class="pi pi-pencil"
+            (click)="addPatient('Add-Patient', dataItem)"
+          ></i>
+          <i class="pi pi-eye"></i>
+          <i class="pi pi-trash" (click)="deletePatient(dataItem, $event)"></i>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+  <app-add-patient
+    (patientAdd)="getPatients()"
+    [patientData]="patientData"
+  ></app-add-patient>
+</div>
+<p-toast></p-toast>
+
+<p-confirmPopup></p-confirmPopup>

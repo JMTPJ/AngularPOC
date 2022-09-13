@@ -1,0 +1,8 @@
+.p-tabmenu-nav{
+    padding-left: 60%;
+}
+.sticky{
+    position: fixed;
+    width: 100%;
+    z-index: 11;
+}

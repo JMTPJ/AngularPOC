@@ -1,0 +1,174 @@
+<div class="side-panel-right panel-medium horizondal-panel" id="Add-Patient">
+    <div class="close-sidepanel" (click)="closeSidePanel()">X</div>
+    <h3 class="right-slide-title">
+      <span *ngIf="patientId == 0">Add Patient</span><span *ngIf="patientId != 0">Edit Patient</span>
+    </h3>
+    <form class="add-user-form" [formGroup]="addPatientForm" (ngSubmit)="onSubmit()">
+      <div class="row row-lg">
+        <div class="form-group col-sm-12 margin-bottom-20">   
+            <label class="control-label" for="patientCode"> Patient Code</label>
+            <input 
+              type="text" 
+              class="form-control input" 
+              id="patientCode" 
+              name="patientCode" 
+              formControlName="patientCode" 
+              autocomplete="off"
+              readonly
+            />
+        </div>
+        <div class="form-group col-sm-12 margin-bottom-20 {{e.firstName.invalid && (e.firstName.dirty || e.firstName.touched) ? 'has-error' : ''}}">
+          <label class="control-label" for="firstName">First Name <span class="required-class">*</span></label>
+          <input 
+            type="text" 
+            class="form-control input" 
+            id="firstName" 
+            name="firstName" 
+            placeholder="First Name"
+            formControlName="firstName" 
+            autocomplete="off" 
+            maxlength="200" 
+          />
+          <div *ngIf="e.firstName.invalid && (e.firstName.dirty || e.firstName.touched)" class="form-error">
+            <p class="error-info" *ngIf="e.firstName.errors&&e.firstName.errors['required']">First Name is required</p>
+            <p class="error-info" *ngIf="e.firstName.errors&&e.firstName.errors['whitespace'] && !e.firstName.errors['required']">
+              Please enter a valid First Name
+            </p>
+          </div>
+        </div>
+        <div class="form-group col-sm-12 margin-bottom-20 {{e.middleName.invalid && (e.middleName.dirty || e.middleName.touched) ? 'has-error' : ''}}">
+            <label class="control-label" for="middleName">Middle Name</label>
+            <input 
+              type="text" 
+              class="form-control input" 
+              id="middleName" 
+              name="middleName" 
+              placeholder="Middle Name"
+              formControlName="middleName" 
+              autocomplete="off" 
+              maxlength="200" 
+            />
+            <div *ngIf="e.middleName.invalid && (e.middleName.dirty || e.middleName.touched)" class="form-error">             
+              <p class="error-info" *ngIf="e.middleName.errors&&e.middleName.errors['whitespace'] && !e.middleName.errors['required']">
+                Please enter a valid Middle Name
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 margin-bottom-20 {{e.surname.invalid && (e.surname.dirty || e.surname.touched) ? 'has-error' : ''}}">
+            <label class="control-label" for="surname">Surname <span class="required-class">*</span></label>
+            <input 
+              type="text" 
+              class="form-control input" 
+              id="surname" 
+              name="surname" 
+              placeholder="Surname"
+              formControlName="surname" 
+              autocomplete="off" 
+              maxlength="200" 
+            />
+            <div *ngIf="e.surname.invalid && (e.surname.dirty || e.surname.touched)" class="form-error"> 
+              <p class="error-info" *ngIf="e.surname.errors&&e.surname.errors['required']">Surname is required</p>            
+              <p class="error-info" *ngIf="e.surname.errors&&e.surname.errors['whitespace'] && !e.surname.errors['required']">
+                Please enter a valid Surname
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 margin-bottom-20 {{e.mailId.invalid && (e.mailId.dirty || e.mailId.touched) ? 'has-error' : ''}}">
+            <label class="control-label" for="mailId">Email Id <span class="required-class">*</span></label>
+            <input 
+              type="text" 
+              class="form-control input" 
+              id="mailId" 
+              name="mailId" 
+              placeholder="Email Id"
+              formControlName="mailId" 
+              autocomplete="off" 
+              maxlength="200" 
+            />
+            <div *ngIf="e.mailId.invalid && (e.mailId.dirty || e.mailId.touched)" class="form-error"> 
+              <p class="error-info" *ngIf="e.mailId.errors&&e.mailId.errors['required']">Email Id is required</p>            
+              <p class="error-info" *ngIf="e.mailId.errors&&e.mailId.errors['whitespace'] && !e.mailId.errors['required']">
+                Please enter a valid Email Id
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 margin-bottom-20 {{e.contactNo.invalid && (e.contactNo.dirty || e.contactNo.touched) ? 'has-error' : ''}}">
+            <label class="control-label" for="contactNo">Contact Number <span class="required-class">*</span></label>
+            <input 
+              type="text" 
+              class="form-control input" 
+              id="contactNo" 
+              name="contactNo" 
+              placeholder="Contact Number"
+              formControlName="contactNo" 
+              autocomplete="off" 
+              maxlength="200" 
+            />
+            <div *ngIf="e.contactNo.invalid && (e.contactNo.dirty || e.contactNo.touched)" class="form-error"> 
+              <p class="error-info" *ngIf="e.contactNo.errors&&e.contactNo.errors['required']">Contact Number is required</p>            
+              <p class="error-info" *ngIf="e.contactNo.errors&&e.contactNo.errors['whitespace']">
+                Please enter a valid Contact Number
+              </p>
+              <p class="error-info" *ngIf="e.contactNo.errors&&e.contactNo.errors['minlength']">
+                shuld be 10 number
+              </p>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 margin-bottom-20">
+            <label class="control-label" for="contactNo">Gender</label>
+            <span *ngFor="let item of enumValue()" class="gender-span">
+              <p-radioButton name="gender" value="{{item}}" formControlName="gender" label={{enumKey(item)}}></p-radioButton>
+            </span>
+          </div> 
+          <div class="form-group col-sm-12 margin-bottom-20 {{e.age.invalid && (e.age.dirty || e.age.touched) ? 'has-error' : ''}}">
+            <label class="control-label" for="contactNo">Age <span class="required-class">*</span></label>
+            <label>Your Age Is {{e.age.value}}</label>
+            <p-slider class="age-slider" formControlName="age"  [min]="0" [max]="100"></p-slider> 
+            <div *ngIf="e.contactNo.invalid && (e.contactNo.dirty || e.contactNo.touched)" class="form-error"> 
+              <p class="error-info" *ngIf="e.age.errors&&e.age.errors['required']">Age is required</p>
+            </div>                   
+          </div>      
+       
+       
+  
+        <div class="upload-document form-group col-sm-12 margin-bottom-20 ">
+          <div class="upload-wrapper">
+            <label class="control-label" for="imageDocument">
+              <div class="upload-text">Upload Image</div>
+            </label>  
+            <input 
+              #myInput 
+              type="file" 
+              (change)="detectFiles($event)" 
+              accept="image/*" 
+              class="form-control input"
+              id="imageDocument" 
+              autocomplete="off" 
+            />
+          </div>
+          <div class="preview-container">
+            <div class="image-row" *ngIf="uploadedDocuments">
+              <p class="preview-name">
+                {{ uploadedDocuments.name }}
+              </p>
+              <!-- (mouseleave) ="item.preview = false" -->
+              <p class="pi pi-times" *ngIf="uploadedDocuments" (click)="removeImage()"></p>
+              <div class="image-container" *ngIf="uploadedDocuments.preview">
+                <img [src]="uploadedDocuments.url" class="" />
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-12 add-button">
+          <button type="submit" pButton [disabled]="!addPatientForm.valid">
+            <span *ngIf="patientId == 0">Save</span><span *ngIf="patientId != 0">Update</span>
+          </button>
+          <button type="button" pButton (click)="closeSidePanel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-confirmPopup></p-confirmPopup>
